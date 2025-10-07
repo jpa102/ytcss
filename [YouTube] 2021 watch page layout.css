@@ -1,0 +1,303 @@
+/* ==UserStyle==
+@name           [YouTube] 2021 watch page layout
+@namespace      github.com/openstyles/stylus
+@version        1.0
+@description    my take on recreating the 2021 watch page layout feel using css
+@author         John Patrick Adem
+
+@preprocessor stylus
+@var checkbox sponsoredAdsHider                           "[experimental] hide sponsored ads at home feed" 0
+==/UserStyle== */
+
+@-moz-document regexp("^https:\\/\\/www\\.youtube\\.com.+"), regexp("^https:\\/\\/studio\\.youtube\\.com.+"), regexp("^https:\\/\\/m\\.youtube\\.com.+") {
+    if (sponsoredAdsHider) {
+        ytd-rich-item-renderer:has(#content.ytd-rich-item-renderer > ytd-ad-slot-renderer) {
+			display: none !important;
+		}
+	}
+
+
+
+	html[dark], [dark] {
+		--yt-spec-base-background: rgb(24, 24, 24); /* the main background */
+
+		ytd-masthead.shell.dark, ytd-masthead.shell.theater,
+		#container.ytd-masthead, #guide-content.ytd-app {
+			background: rgb(32, 32, 32) !important;
+		}
+
+		ytd-feed-filter-chip-bar-renderer[frosted-glass-mode=with-chipbar] #chips-wrapper.ytd-feed-filter-chip-bar-renderer {
+			background: rgb(32, 32, 32);
+		}
+
+		#subscribe-button-shape > button {
+			background: var(--yt-spec-incorrect-indicator);
+			color: var(--yt-spec-text-primary);
+		}
+
+		yt-flexible-actions-view-model > div > yt-subscribe-button-view-model > yt-animated-action > div > div > button {
+			background: var(--yt-spec-incorrect-indicator) !important;
+			color: var(--yt-spec-text-primary) !important;
+			border-radius: 2px;
+			padding: var(--yt-button-padding,.7em .57em);
+		}
+
+		yt-flexible-actions-view-model > div > button-view-model > button {
+			border: 1px solid var(--yt-spec-themed-blue) !important;
+			color: var(--yt-spec-themed-blue) !important;
+			border-radius: 2px;
+			padding: var(--yt-button-padding,.7em .57em);
+		}
+	}
+
+	html:not([dark]) {
+		ytd-browse, ytd-app {
+			background: var(--yt-spec-white-2);
+		}
+
+        #guide-inner-content.ytd-app, ytd-mini-guide-renderer {
+			background: var(--yt-spec-white-1);
+		}
+
+		#subscribe-button-shape > button {
+			background: var(--yt-brand-medium-red);
+			color: var(--yt-spec-white-1);
+		}
+	}
+
+	/*
+		home page
+	*/
+	#buttons.ytd-masthead > ytd-button-renderer > yt-button-shape > a,
+	ytd-guide-signin-promo-renderer > ytd-button-renderer > yt-button-shape > a {
+		border-color: var(--yt-spec-call-to-action) !important;
+		color: var(--yt-spec-call-to-action) !important;
+		padding: 18px 14px 20px 18px !important;
+		border-radius: 2px !important;
+		text-transform: uppercase !important;
+	}
+
+	ytd-multi-page-menu-renderer {
+		border-radius: 0px;
+	}
+
+	.ytSearchboxComponentSuggestionsContainer, .ytSuggestionComponentRoundedSuggestion {
+		border-radius: 0px;
+	}
+
+	.ytSuggestionComponentSuggestion {
+		margin: -8px 0px;
+	}
+
+	ytd-rich-item-renderer[rendered-from-rich-grid] {
+		width: 246px;
+	}
+    
+	ytd-rich-item-renderer[is-responsive-grid] {
+		width: 200px;
+	}
+
+	.ytThumbnailViewModelLarge, .shortsLockupViewModelHostThumbnailParentContainerRounded {
+		border-radius: 0px;
+	}
+
+	ytd-rich-item-renderer[rendered-from-rich-grid][is-in-first-column] {
+		margin-left: calc(var(--ytd-rich-grid-item-margin)/2);
+		margin-right: calc(var(--ytd-rich-grid-item-margin)/2);
+		margin-bottom: var(--ytd-rich-grid-row-margin);
+	}
+
+	#sections.ytd-guide-renderer>*.ytd-guide-renderer:first-child {
+		padding: 0px 0px 12px 0px;
+	}
+
+	ytd-guide-entry-renderer {
+		padding: 0 12px;
+		border-radius: 0px;
+	}
+
+	#chips-wrapper.ytd-feed-filter-chip-bar-renderer {
+		border-bottom: 1px solid var(--yt-spec-10-percent-layer);
+		border-top: 1px solid var(--yt-spec-10-percent-layer);
+	}
+
+	#left-arrow-button.ytd-feed-filter-chip-bar-renderer,
+	#right-arrow-button.ytd-feed-filter-chip-bar-renderer {
+		background: var(--yt-spec-brand-background-primary) !important;
+	}
+
+	#left-arrow.ytd-feed-filter-chip-bar-renderer::after {
+		background: linear-gradient(to right,var(--yt-spec-brand-background-primary) 20%,rgba(255,255,255,0) 80%) !important;
+	}
+
+	#right-arrow.ytd-feed-filter-chip-bar-renderer::before {
+		background: linear-gradient(to left,var(--yt-spec-brand-background-primary) 20%,rgba(255,255,255,0) 80%) !important;
+	}
+
+	.yt-lockup-metadata-view-model--standard .yt-lockup-metadata-view-model__title,
+	.shortsLockupViewModelHostOutsideMetadataEndpoint {
+		font-size: 1.4rem !important;
+	}
+
+	.yt-content-metadata-view-model--medium-text .yt-content-metadata-view-model__metadata-text {
+		font-size: 12px !important;
+	}
+
+	.ytCollectionsStackCollectionStack2,
+	.ytCollectionsStackCollectionStack1Large {
+		border-radius: 0px;
+	}
+
+
+
+	/*
+		watch page
+	*/
+	.yt-spec-button-shape-next--tonal {
+		background: transparent !important;
+	}
+
+	.ytSearchboxComponentInputBox,
+	.ytSearchboxComponentSearchButton {
+		border-radius: 2px 0 0 2px;
+	}
+
+	#sponsor-button > timed-animation-button-renderer > yt-smartimation > div > ytd-button-renderer > yt-button-shape > button,
+	#subscribe-button > ytd-subscribe-button-renderer > yt-smartimation > div > yt-button-shape > button,
+	#buttons > ytd-button-renderer > yt-button-shape > button {
+		border-radius: 2px;
+		padding: var(--yt-button-padding,.7em .57em);
+	}
+
+	#sponsor-button > timed-animation-button-renderer > yt-smartimation > div > ytd-button-renderer > yt-button-shape > button {
+		border: 1px solid var(--yt-spec-themed-blue);
+		color: var(--yt-spec-themed-blue);
+	}
+
+	button > .yt-spec-button-shape-next__button-text-content {
+		text-transform: uppercase;
+	}
+
+    .yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--segmented-start::after {
+		background: transparent;
+	}
+
+	like-button-view-model > toggle-button-view-model > button-view-model > button,
+	dislike-button-view-model > toggle-button-view-model > button-view-model > button,
+	#top-level-buttons-computed > yt-button-view-model > button-view-model > button,
+	ytd-download-button-renderer > ytd-button-renderer > yt-button-shape > button,
+	#flexible-item-buttons > yt-button-view-model > button-view-model > button {
+		padding-left: 12px !important;
+	}
+
+	dislike-button-view-model > toggle-button-view-model > button-view-model > button,
+	ytd-download-button-renderer > ytd-button-renderer > yt-button-shape > button,
+	#flexible-item-buttons > yt-button-view-model > button-view-model > button {
+		padding-right: 6px !important;
+	}
+
+	like-button-view-model > toggle-button-view-model > button-view-model > button > yt-touch-feedback-shape,
+	dislike-button-view-model > toggle-button-view-model > button-view-model > button > yt-touch-feedback-shape,
+	#top-level-buttons-computed > yt-button-view-model > button-view-model > button > yt-touch-feedback-shape,
+	ytd-download-button-renderer > ytd-button-renderer > yt-button-shape > button > yt-touch-feedback-shape,
+	#flexible-item-buttons > yt-button-view-model > button-view-model > button > yt-touch-feedback-shape {
+		width: 36px;
+		border-radius: 20px !important;
+	}
+
+	ytd-download-button-renderer {
+		margin-left: 0px !important;
+	}
+
+	yt-button-view-model.ytd-menu-renderer {
+		margin-left: 12px !important;
+	}
+
+	#description.ytd-watch-metadata {
+		background: transparent;
+	}
+
+    html body[rounded-container] tp-yt-paper-tooltip .tp-yt-paper-tooltip[style-target=tooltip] {
+		border-radius: 2px;
+	}
+    
+	.ytChipShapeChip {
+		border-radius: 40px;
+		border: 1px solid var(--yt-spec-10-percent-layer);
+		transition: background-color 0.5s cubic-bezier(0.05, 0, 0, 1);
+	}
+
+	.ytChipShapeChip.ytChipShapeInactive:hover {
+		background: var(--yt-spec-10-percent-layer);
+	}
+
+	ytd-rich-metadata-renderer[rounded],
+	ytd-menu-popup-renderer,
+	ytd-menu-service-item-renderer[use-list-item-styles] tp-yt-paper-item.ytd-menu-service-item-renderer {
+		border-radius: 0px;
+	}
+
+	ytd-video-owner-renderer > .yt-simple-endpoint.ytd-video-owner-renderer > yt-img-shadow,
+	ytd-video-owner-renderer > .yt-simple-endpoint.ytd-video-owner-renderer > yt-img-shadow > img {
+		height: 48px !important;
+		width: 48px !important;
+	}
+
+	ytd-watch-metadata[title-headline-xs] h1.ytd-watch-metadata {
+		font-weight: 400;
+		font-size: 18px;
+	}
+
+	.ytp-settings-menu {
+		border-radius: 4px;
+	}
+
+	#player.skeleton.flexy #player-api.round,
+	ytd-watch-flexy[rounded-player] #ytd-player.ytd-watch-flexy, .ytThumbnailViewModelMedium {
+		border-radius: 0px;
+	}
+
+	ytd-watch-metadata.ytd-watch-flexy {
+		margin-top: 20px;
+	}
+
+	/* for return youtube dislike */
+	.ryd-tooltip.ryd-tooltip-new-design {
+		bottom: -9px;
+	}
+    
+	#top-row.ytd-watch-metadata {
+		padding-bottom: 0px;
+		border-bottom: unset !important;
+		flex-direction: column-reverse;
+	}
+
+	#top-row.ytd-watch-metadata > #owner {
+		margin-top: 20px;
+	}
+
+	#top-row.ytd-watch-metadata > #actions {
+		margin-top: 8px;
+		padding-bottom: 9px;
+		border-bottom: 1px solid var(--yt-spec-10-percent-layer);
+	}
+
+	tp-yt-paper-tooltip#ryd-dislike-tooltip.ytd-sentiment-bar-renderer > #tooltip.tp-yt-paper-tooltip {
+		margin: 17px; /* RYD's tooltip height */
+	}
+
+
+
+    /*
+		channel page
+	*/
+	.ytImageBannerViewModelInset {
+		border-radius: 0px;
+	}
+
+	.yt-page-header-view-model__page-header-flexible-actions--page-header-flexible-actions-margin-bottom {
+		margin-top: 40px;
+		position: absolute;
+		right: 0;
+	}
+}
