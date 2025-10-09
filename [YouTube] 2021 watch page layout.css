@@ -1,18 +1,31 @@
 /* ==UserStyle==
 @name           [YouTube] 2021 watch page layout
 @namespace      github.com/openstyles/stylus
-@version        1.0
+@version        1.1
 @description    my take on recreating the 2021 watch page layout feel using css
 @author         John Patrick Adem
 
 @preprocessor stylus
-@var checkbox sponsoredAdsHider                           "[experimental] hide sponsored ads at home feed" 0
+@var checkbox sponsoredAdsHider                           "[experimental] hide sponsored ads" 0
+@var checkbox rydColoredThumbsWatchPage                   "[work in progress] make the like and dislike icons colored when toggled in return youtube dislike" 0
 ==/UserStyle== */
 
-@-moz-document regexp("^https:\\/\\/www\\.youtube\\.com.+"), regexp("^https:\\/\\/studio\\.youtube\\.com.+"), regexp("^https:\\/\\/m\\.youtube\\.com.+") {
+@-moz-document regexp("^https:\\/\\/www\\.youtube\\.com.+") {
     if (sponsoredAdsHider) {
         ytd-rich-item-renderer:has(#content.ytd-rich-item-renderer > ytd-ad-slot-renderer) {
 			display: none !important;
+		}
+
+		ytd-companion-slot-renderer {
+			display: none;
+		}
+	}
+
+	if (rydColoredThumbsWatchPage) {
+		like-button-view-model > toggle-button-view-model > button-view-model > button > div > yt-icon > yt-animated-icon > ytd-lottie-player > lottie-component > svg > g > g > g > g > path,
+		like-button-view-model > toggle-button-view-model > button-view-model > button > div > yt-icon,
+		dislike-button-view-model > toggle-button-view-model > button-view-model > button > div > yt-icon {
+			fill: currentcolor !important;
 		}
 	}
 
@@ -22,7 +35,7 @@
 		--yt-spec-base-background: rgb(24, 24, 24); /* the main background */
 
 		ytd-masthead.shell.dark, ytd-masthead.shell.theater,
-		#container.ytd-masthead, #guide-content.ytd-app {
+		#container.ytd-masthead, #guide-content.ytd-app, ytd-mini-guide-renderer {
 			background: rgb(32, 32, 32) !important;
 		}
 
@@ -213,10 +226,6 @@
 		margin-left: 12px !important;
 	}
 
-	#description.ytd-watch-metadata {
-		background: transparent;
-	}
-
     html body[rounded-container] tp-yt-paper-tooltip .tp-yt-paper-tooltip[style-target=tooltip] {
 		border-radius: 2px;
 	}
@@ -261,15 +270,36 @@
 		margin-top: 20px;
 	}
 
+    ytd-watch-metadata.ytd-watch-flexy {
+		border-bottom: 1px solid var(--yt-spec-10-percent-layer);
+		padding-bottom: 10px;
+	}
+
+	#owner.ytd-watch-metadata {
+		max-width: unset !important;
+		justify-content: space-between;
+		margin-right: unset !important;
+	}
+
+	#description.ytd-watch-metadata {
+		background: transparent;
+		margin-left: 48px;
+	}
+
+	#description.ytd-watch-metadata > #description-inner > ytd-watch-info-text {
+		display: none;
+	}
+
 	/* for return youtube dislike */
 	.ryd-tooltip.ryd-tooltip-new-design {
 		bottom: -9px;
 	}
     
 	#top-row.ytd-watch-metadata {
-		padding-bottom: 0px;
+		display: flex !important;
+		padding-bottom: 0px !important;
 		border-bottom: unset !important;
-		flex-direction: column-reverse;
+		flex-direction: column-reverse !important;
 	}
 
 	#top-row.ytd-watch-metadata > #owner {
