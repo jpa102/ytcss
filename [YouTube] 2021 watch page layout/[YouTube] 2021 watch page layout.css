@@ -1,11 +1,12 @@
 /* ==UserStyle==
 @name           [YouTube] 2021 watch page layout
 @namespace      github.com/openstyles/stylus
-@version        1.3
+@version        1.5
 @description    my take on recreating the 2021 watch page layout feel using css
 @author         John Patrick Adem
 
 @preprocessor stylus
+@var checkbox hitchhikerStyledSentimentBar                "2017 style likes and dislikes bar (requires experiment flag changer userscript)" 0
 @var checkbox sponsoredAdsHider                           "[experimental] hide sponsored ads" 0
 @var checkbox merchShelfHider                             "[experimental] hide merch shelf" 0
 @var checkbox rydColoredThumbsWatchPage                   "[work in progress] make the like and dislike icons colored when toggled in return youtube dislike" 0
@@ -34,6 +35,15 @@
 		dislike-button-view-model > toggle-button-view-model > button-view-model > button > div > yt-icon {
 			fill: currentcolor !important;
 		}
+
+	if (hitchhikerStyledSentimentBar) {
+		ytd-sentiment-bar-renderer.ratio-bar-renderer-html > #container {
+			background: var(--ytrb-bar-dislikes-color);
+		}
+
+		ytd-sentiment-bar-renderer.ratio-bar-renderer-html > #container > #like-bar {
+			background: var(--ytrb-bar-likes-color);
+		}
 	}
 
 
@@ -42,8 +52,8 @@
 		--yt-spec-base-background: rgb(24, 24, 24); /* the main background */
 
 		ytd-masthead.shell.dark, ytd-masthead.shell.theater,
-		#container.ytd-masthead, #guide-content.ytd-app, ytd-mini-guide-renderer {
-			background: rgb(32, 32, 32) !important;
+		#container.ytd-masthead, #guide-content.ytd-app, ytd-mini-guide-renderer, a.ytd-mini-guide-entry-renderer {
+			background: rgb(32, 32, 32);
 		}
 
 		ytd-feed-filter-chip-bar-renderer[frosted-glass-mode=with-chipbar] #chips-wrapper.ytd-feed-filter-chip-bar-renderer {
@@ -75,7 +85,7 @@
 			background: var(--yt-spec-white-2);
 		}
 
-        #guide-inner-content.ytd-app, ytd-mini-guide-renderer {
+		#guide-inner-content.ytd-app, ytd-mini-guide-renderer {
 			background: var(--yt-spec-white-1);
 		}
 
@@ -94,10 +104,10 @@
 		background: transparent !important;
 	}
 
-    html body[rounded-container] tp-yt-paper-tooltip .tp-yt-paper-tooltip[style-target=tooltip], .ytTooltipContainerDefaultTooltipContent {
+	html body[rounded-container] tp-yt-paper-tooltip .tp-yt-paper-tooltip[style-target=tooltip], .ytTooltipContainerDefaultTooltipContent {
 		border-radius: 2px;
 	}
-    
+
 	.ytChipShapeChip {
 		border-radius: 40px;
 		border: 1px solid var(--yt-spec-10-percent-layer);
@@ -108,8 +118,10 @@
 		background: var(--yt-spec-10-percent-layer);
 	}
 
-	ytd-modal-with-title-and-button-renderer[modern-modal][modern-modal][modern-modal] {
-		border-radius: 0px;
+	ytd-engagement-panel-section-list-renderer,
+	ytd-modal-with-title-and-button-renderer[modern-modal][modern-modal][modern-modal],
+	tp-yt-paper-dialog[modern] {
+		border-radius: 0px !important;
 	}
 
 
@@ -140,7 +152,7 @@
 	ytd-rich-item-renderer[rendered-from-rich-grid] {
 		width: 246px;
 	}
-    
+
 	ytd-rich-item-renderer[is-responsive-grid] {
 		width: 200px;
 	}
@@ -155,13 +167,19 @@
 		margin-bottom: var(--ytd-rich-grid-row-margin);
 	}
 
-	#sections.ytd-guide-renderer>*.ytd-guide-renderer:first-child {
-		padding: 0px 0px 12px 0px;
+	ytd-guide-section-renderer.ytd-guide-renderer {
+		padding: 12px 0px !important;
 	}
 
 	ytd-guide-entry-renderer {
-		padding: 0 12px;
 		border-radius: 0px;
+		margin-left: 0px;
+	}
+
+	#endpoint.yt-simple-endpoint.ytd-guide-entry-renderer:hover,
+	#endpoint.yt-simple-endpoint.ytd-guide-entry-renderer:focus,
+	#newness-dot.ytd-guide-entry-renderer {
+		border-radius: 0px !important;
 	}
 
 	#chips-wrapper.ytd-feed-filter-chip-bar-renderer {
@@ -217,7 +235,7 @@
 		text-transform: uppercase;
 	}
 
-    .yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--segmented-start::after {
+	.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--segmented-start::after {
 		background: transparent;
 	}
 
@@ -244,10 +262,6 @@
 		border-radius: 20px !important;
 	}
 
-	ytd-download-button-renderer {
-		margin-left: 0px !important;
-	}
-
 	yt-button-view-model.ytd-menu-renderer {
 		margin-left: 12px !important;
 	}
@@ -258,13 +272,18 @@
 		border-radius: 0px;
 	}
 
+	tp-yt-paper-item {
+		padding: 0px 24px !important;
+	}
+
 	ytd-video-owner-renderer > .yt-simple-endpoint.ytd-video-owner-renderer > yt-img-shadow,
 	ytd-video-owner-renderer > .yt-simple-endpoint.ytd-video-owner-renderer > yt-img-shadow > img {
 		height: 48px !important;
 		width: 48px !important;
 	}
 
-	ytd-watch-metadata[title-headline-xs] h1.ytd-watch-metadata {
+	ytd-watch-metadata[title-headline-xs] h1.ytd-watch-metadata,
+	#title.ytd-watch-metadata > h1.ytd-watch-metadata > yt-formatted-string {
 		font-weight: 400;
 		font-size: 18px;
 	}
@@ -282,7 +301,7 @@
 		margin-top: 20px;
 	}
 
-    ytd-watch-metadata.ytd-watch-flexy {
+	ytd-watch-metadata.ytd-watch-flexy {
 		border-bottom: 1px solid var(--yt-spec-10-percent-layer);
 		padding-bottom: 10px;
 	}
@@ -294,9 +313,22 @@
 		width: unset !important;
 	}
 
-	#description.ytd-watch-metadata {
-		background: transparent;
-		margin-left: 48px;
+	ytd-video-owner-renderer {
+		flex: 1;
+		flex-basis: 0.000000001px;
+	}
+
+	#description.ytd-watch-metadata,
+	#description.ytd-watch-metadata:hover
+	ytd-rich-metadata-row-renderer {
+		background: transparent !important;
+		margin-left: 50px;
+	}
+
+	#description > yt-interaction > .stroke.yt-interaction,
+	#description > yt-interaction > .fill.yt-interaction {
+		background: transparent !important;
+        border: 1px solid transparent !important;
 	}
 
 	#description.ytd-watch-metadata > #description-inner > ytd-watch-info-text {
@@ -307,8 +339,12 @@
 		cursor: unset;
 	}
 
+	ytd-watch-metadata[flex-menu-enabled] #actions-inner.ytd-watch-metadata {
+		width: revert;
+	}
+
 	ytd-watch-flexy:not([full-bleed-player][full-bleed-no-max-width-columns]) #columns.ytd-watch-flexy {
-		max-width: 1500px;
+		/* max-width: 1500px; */
         display: flex;
         justify-content: center !important;
 	}
@@ -331,11 +367,48 @@
 		border-radius: 0px;
 	}
 
+	/* originally from .more-button.ytd-video-secondary-info-renderer, .less-button.ytd-video-secondary-info-renderer */
+	.button.ytd-text-inline-expander {
+		color: var(--yt-spec-text-secondary);
+		display: inline-block;
+		margin-top: 6px;
+		text-transform: uppercase;
+		font-family: "Roboto", "Arial", sans-serif;
+		font-size: 1.2rem;
+		line-height: 1.8rem;
+		font-weight: 500;
+	}
+
+    #expand.ytd-text-inline-expander {
+		position: absolute;
+        left: 0 !important;
+	}
+
+	ytd-text-inline-expander[show-expand-button] {
+		height: 90px;
+	}
+
+	ytd-text-inline-expander[is-expanded] {
+		height: unset;
+	}
+
+	#notification-preference-button > ytd-subscription-notification-toggle-button-renderer-next > yt-button-shape > button {
+		padding: 20.5px 16.5px !important;
+		background: rgba(255, 255, 255, 0.1) !important;
+		border-radius: 2px;
+	}
+
+	ytd-button-renderer.style-mono-filled[is-paper-button] {
+		border-radius: 2px;
+	}
+
+
+
 	/* for return youtube dislike */
 	.ryd-tooltip.ryd-tooltip-new-design {
 		bottom: -7px;
 	}
-    
+
 	#top-row.ytd-watch-metadata {
 		display: flex !important;
 		padding-bottom: 0px !important;
@@ -361,21 +434,60 @@
 
 
 
-    /*
+	/*
 		channel page
 	*/
+	/* profile picture */
+	.yt-spec-avatar-shape--avatar-size-giant {
+		width: 100px;
+		height: 100px;
+	}
+
+	.page-header-view-model-wiz__page-header-headline-image {
+		margin: unset;
+	}
+
+	.yt-spec-avatar-shape__button--button-giant {
+		width: 130px;
+		height: 100px;
+	}
+
+	/* channel name */
+	.yt-page-header-view-model__page-header-title--page-header-title-large {
+		font-weight: 500;
+		font-size: 2.6rem;
+		line-height: unset;
+	}
+
 	.ytImageBannerViewModelInset {
 		border-radius: 0px;
 	}
 
 	.yt-page-header-view-model__page-header-flexible-actions--page-header-flexible-actions-margin-bottom {
-		margin-top: 40px;
 		position: absolute;
 		right: 0;
 	}
 
+	/* hide extra elements not originally seen in the 2021 layout */
+	yt-description-preview-view-model,
+	yt-attribution-view-model,
+	yt-content-metadata-view-model > div.yt-content-metadata-view-model__metadata-row.yt-content-metadata-view-model__metadata-row--metadata-row-inline:nth-of-type(1),
+	.yt-content-metadata-view-model__delimiter--standalone,
+	.yt-content-metadata-view-model__metadata-row.yt-content-metadata-view-model__metadata-row--metadata-row-inline > .yt-content-metadata-view-model__metadata-text:last-of-type,
+	.yt-content-metadata-view-model__metadata-row.yt-content-metadata-view-model__metadata-row--metadata-row-inline > .yt-content-metadata-view-model__delimiter {
+	    display: none !important;
+	}
+
+	#tabsContainer {
+		margin: 0px 110px;
+	}
+
 	#page-header-banner.ytd-tabbed-page-header {
 		padding: unset !important;
+	}
+
+	#page-header.ytd-tabbed-page-header {
+		padding: 24px 130px 4px !important;
 	}
 
 	.ytFlexibleActionsViewModelAction > button-view-model > button.yt-spec-button-shape-next--filled {
@@ -388,11 +500,26 @@
 		background: var(--yt-spec-incorrect-indicator);
 	}
 
-    .ytFlexibleActionsViewModelAction > button-view-model > button {
+	.ytFlexibleActionsViewModelAction > button-view-model > button {
 		padding: 20px 16px !important;
 	}
 
 	ytd-thumbnail[size=large] a.ytd-thumbnail, ytd-thumbnail[size=large]::before {
 		border-radius: 0px;
+	}
+
+	/* channel option buttons (if you own a channel) */
+	yt-flexible-actions-view-model > div > button-view-model > a.yt-spec-button-shape-next--tonal,
+	yt-flexible-actions-view-model > div > button-view-model > a.yt-spec-button-shape-next--tonal {
+		background: rgba(255, 255, 255, 0.1) !important;
+		border-radius: 2px !important;
+		padding: 20px 16px !important;
+	}
+
+	/* channel navigation */
+	.yt-tab-shape {
+		margin-right: 24px !important;
+		padding: 0px 20px !important;
+		height: 48px !important;
 	}
 }
